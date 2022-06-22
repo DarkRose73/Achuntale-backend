@@ -16,6 +16,7 @@ const UsuarioSchema = new Schema({
     },
     datos: {
         type: Object,
+        required: true
     }
 }, {
     versionKey: false,

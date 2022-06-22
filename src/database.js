@@ -7,8 +7,8 @@ import config from "./config";
     try {
         //  Realizar la conexión a la BD desde la URL dada en config
         const db = await mongoose.connect(config.mongodbURL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true
         })
         console.log('La base de datos está conectada a:', db.connection.name)
     } catch (error) {
