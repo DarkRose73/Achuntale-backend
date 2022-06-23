@@ -60,5 +60,9 @@ export const obetenerUsuarioPorCorreo = async (req, resp) => {
             resp.json({ message: error })
         }
     }
+}
 
+export const actualizarDireccionEnvio = async (req, resp) => {
+    const datosActualizados = await Usuario.findByIdAndUpdate(req.body.id, req.body)
+    resp.json(datosActualizados)
 }
