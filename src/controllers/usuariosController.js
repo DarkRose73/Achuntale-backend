@@ -19,12 +19,12 @@ export const crearUsuario = async (req, resp) => {
     const datos = req.body.datos
     // Validación de todos los datos obligatorios del usuario
     let datosCorrectos = true;
-    if (datos.nombre == "" || !datos.nombre) datosCorrectos = false
-    if (datos.apellido == "" || !datos.apellido) datosCorrectos = false
-    if (datos.direccion == "" || !datos.direccion) datosCorrectos = false
-    if (datos.ciudad == "" || !datos.ciudad) datosCorrectos = false
-    if (datos.region == "" || !datos.region) datosCorrectos = false
-    if (datos.comuna == "" || !datos.comuna) datosCorrectos = false
+    if (datos.nombre === null) datosCorrectos = false
+    if (datos.apellido === null) datosCorrectos = false
+    if (datos.direccion === null) datosCorrectos = false
+    if (datos.ciudad === null) datosCorrectos = false
+    if (datos.region === null) datosCorrectos = false
+    if (datos.comuna === null) datosCorrectos = false
 
     if (datosCorrectos) {
         const nuevoUsuario = new Usuario({

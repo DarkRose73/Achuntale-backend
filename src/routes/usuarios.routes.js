@@ -1,7 +1,6 @@
 import { Router } from 'express'
 // Importar el controlador de Usuarios
 import * as UsuarioController from '../controllers/usuariosController'
-import Usuario from '../models/Usuario'
 
 const router = Router()
 
