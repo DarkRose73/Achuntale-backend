@@ -1,7 +1,11 @@
 // Importar el modelo de Usuario desde los modelos
 import Usuario from '../models/Usuario'
+const bcryptjs = require('bcrypt')
 
-// TODO: Manejo de errores
+const validarContraseña = async (contraseña, hashGuardado) => {
+    let compare = await bcryptjs.compare(contraseña, hashGuardado)
+    return compare
+}
 
 export const obtenerUsuarios = async (req, resp) => {
     try {
@@ -19,17 +23,13 @@ export const crearUsuario = async (req, resp) => {
     const datos = req.body.datos
     // Validación de todos los datos obligatorios del usuario
     let datosCorrectos = true;
-    if (datos.nombre === null) datosCorrectos = false
-    if (datos.apellido === null) datosCorrectos = false
-    if (datos.direccion === null) datosCorrectos = false
-    if (datos.ciudad === null) datosCorrectos = false
-    if (datos.region === null) datosCorrectos = false
-    if (datos.comuna === null) datosCorrectos = false
-
+    if ((datos.nombre || datos.apellido || datos.direccion || datos.ciudad || datos.region || datos.comuna) === null) datosCorrectos = false // Esto es mejor que muchos if
+    // Realizar el hashing de la contraseña para guardarla en la bd
+    const passwordHash = await bcryptjs.hash(req.body.password, 8)
     if (datosCorrectos) {
         const nuevoUsuario = new Usuario({
             correo: req.body.correo,
-            password: req.body.password,
+            password: passwordHash,
             datos
         })
         try {
@@ -43,6 +43,7 @@ export const crearUsuario = async (req, resp) => {
     }
 }
 
+// Ahora a este middleware se le debe pasar la contraseña en el body
 export const obetenerUsuarioPorCorreo = async (req, resp) => {
     if (!req.body.correo) {
         resp.status(404).json({ mensaje: "No se ingresó correo" })
@@ -54,7 +55,13 @@ export const obetenerUsuarioPorCorreo = async (req, resp) => {
                 resp.status(404).json({ mensaje: `Error al encontrar usuario con el correo ${req.body.correo}` })
             }
             else {
-                resp.json(usuario)
+                // validar el hash con la contraseña que hay en la BD
+                let compare = await validarContraseña(req.body.password, usuario.password)
+                if (compare) {
+                    resp.json(usuario)
+                } else {
+                    resp.json({ message: "Credenciales incorrectas" })
+                }
             }
         } catch (error) {
             resp.json({ message: error })

@@ -8,6 +8,7 @@ const router = Router()
 
 router.get('/', UsuarioController.obtenerUsuarios)
 
+// Esta ruta busca mediante post, así no envío los datos mediante la URL
 router.post('/correo', UsuarioController.obetenerUsuarioPorCorreo)
 
 router.post('/', UsuarioController.crearUsuario)
