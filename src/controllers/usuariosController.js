@@ -58,6 +58,7 @@ export const obetenerUsuarioPorCorreo = async (req, resp) => {
                 // validar el hash con la contraseña que hay en la BD
                 let compare = await validarContraseña(req.body.password, usuario.password)
                 if (compare) {
+                    usuario.password = req.body.password
                     resp.json(usuario)
                 } else {
                     resp.json({ message: "Credenciales incorrectas" })
