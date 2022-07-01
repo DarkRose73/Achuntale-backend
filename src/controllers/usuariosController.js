@@ -39,6 +39,7 @@ export const crearUsuario = async (req, resp) => {
             resp.status(400).json({ message: "Error al crear usuario" })
         }
     } else {
+        // Status 400 Bad Request
         resp.status(400).json({ mensaje: "Error con los datos ingresados" })
     }
 }

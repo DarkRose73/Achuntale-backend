@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import UsuariosRoutes from './routes/usuarios.routes'
 import ComunasRoutes from './routes/comunas.routes'
+import ComprasRoutes from './routes/compras.routes'
 
 const app = express()
 //  Configuraciones
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
 })
 app.use('/api/usuarios', UsuariosRoutes)
 app.use('/api/comunas', ComunasRoutes)
+app.use('/api/compras', ComprasRoutes)
 
 // TODO eliminar esto luego de hashear las passwords
 // Ejemplo de Hashing con bcrypt NO BORRAR
