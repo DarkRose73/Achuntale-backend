@@ -71,6 +71,15 @@ export const obetenerUsuarioPorCorreo = async (req, resp) => {
 }
 
 export const actualizarDireccionEnvio = async (req, resp) => {
-    const datosActualizados = await Usuario.findByIdAndUpdate(req.body.id, req.body)
-    resp.json(datosActualizados)
+    try {
+        const datosActualizados = await Usuario.findByIdAndUpdate(req.body.id, req.body)
+        resp.json(datosActualizados)
+    } catch (error) {
+        resp.status(404).json({ mensaje: error })
+    }
+}
+
+export const eliminarUsuario = async (req, resp) => {
+    const usuarioEliminado = await Usuario.findByIdAndDelete(req.body.id)
+    resp.json(usuarioEliminado)
 }

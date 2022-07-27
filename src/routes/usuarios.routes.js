@@ -15,4 +15,6 @@ router.post('/', UsuarioController.crearUsuario)
 
 router.put('/', UsuarioController.actualizarDireccionEnvio)
 
+router.delete('/', UsuarioController.eliminarUsuario)
+
 export default router
